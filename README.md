@@ -30,17 +30,17 @@ An industrial-grade ROS 2 package designed to program a simulated 6-axis robotic
 
 ### Install Dependencies:
 
-Bash
+```bash
 cd ~/ros2_ws
 rosdep install --from-paths src --ignore-src -r -y
 Build the Package:
 
-Bash
+```bash
 colcon build --packages-select my_robot_arm_package
 source install/setup.bash
 Launch the Controller Node:
 
-Bash
+```bash
 ros2 run my_robot_arm_package ik_controller
 Repository Structure
 Plaintext
