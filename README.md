@@ -27,7 +27,8 @@ An industrial-grade ROS 2 package designed to program a simulated 6-axis robotic
    ```bash
    cd ~/ros2_ws/src
    git clone [https://github.com/your-username/decode-labs-robotics-project1.git](https://github.com/your-username/decode-labs-robotics-project1.git)
-Install Dependencies:
+
+### Install Dependencies:
 
 Bash
 cd ~/ros2_ws
@@ -51,7 +52,8 @@ my_robot_arm_package/
 └── my_robot_arm_package/
     ├── __init__.py
     └── ik_trajectory_node.py   # Core analytical kinematics and math engine script
-Architecture Overview
+
+### Architecture Overview
 The URDF Structure (urdf/): Contains the physical parameters of the industrial arm, including link cylinder/box properties, fixed anchor transforms, joint rotation axes limits, and specific tool center flange frames.
 
 The Kinematics Node (my_robot_arm_package/): Listens for inputs on the /arm_target_pose topic, applies trigonometry and inverse trigonometric functions to find appropriate joint limits, and outputs the calculated joint vectors over /joint_states.
@@ -77,7 +79,7 @@ Message Type: sensor_msgs/msg/JointState
 
 Output Array Map: Returns positions for ['joint_1', 'joint_2', 'joint_3', 'joint_4', 'joint_5', 'joint_6'] in radians.
 
-Developer Checklist
+#### Developer Checklist
 [ ] The .urdf geometry configuration is verified free of syntax errors.
 
 [ ] Kinematics equation handling intercepts math domain exceptions to prevent node crashes.
