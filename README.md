@@ -1,89 +1,40 @@
-Markdown
-# Project 1: 6-DOF Industrial Manipulator Kinematics & Path Planning
-**Industrial Training Kit | Powered by DecodeLabs**
+# Project 1: Robotic Arm Kinematics & Path Planning 🤖
 
-An industrial-grade ROS 2 package designed to program a simulated 6-axis robotic manipulator arm to execute smooth, coordinate-accurate trajectories from Point A to Point B within a dynamic 3D workspace environment while maintaining rigid safety parameters.
+## 🌟 Overview
+This project is an advanced control package for a simulated 6-Degree-of-Freedom (6-DOF) industrial manipulator arm. The system bridges the gap between raw mathematical path computations and industrial robotic simulation, enabling precise, coordinate-accurate trajectories from Point A to Point B. By implementing mathematical inverse kinematics engines alongside dynamic spatial boundary checks, the architecture guarantees collision-free path execution inside complex 3D engineering environments.
 
-## Features
-- **Kinematic Logic:** Analytical Inverse Kinematics (IK) matrix solver translating raw Cartesian 3D space targets (XYZ) into joint angle states ($\theta_1$ through $\theta_6$).
-- **Obstacle Deflection Field:** Look-ahead distance monitoring pipeline to dynamically evaluate collision zones and safely reject invalid trajectories.
-- **Physics Simulation Ready:** Designed to communicate structural constraints through ROS 2 topics to visualization tools like RViz and Gazebo.
-- **Modular Compilation:** Built following the `ament_python` specifications to ensure seamless workspace builds using `colcon`.
+## 🤖 Components
 
-## Tech Stack
-- **Core Runtime:** ROS 2 Humble Hawksbill / Python 3.10+
-- **Mathematical Libraries:** `math`, `numpy`
-- **Middleware Interfaces:** `rclpy` (ROS 2 Client Library)
-- **Data Communication Messages:** `sensor_msgs/msg/JointState`, `geometry_msgs/msg/Point`
+### 1. 6-DOF Manipulator Robot
+A standard multi-axis industrial articulated robot configuration. Its kinematic profile features a heavy base anchor, rotating waist, pivoting shoulder, dynamic elbow, and a multi-axis wrist flange for ultimate tooling flexibility.
 
-## Quick Start
+### 2. Kinematics Mathematical Node
+The core computational engine of the project. It continuously runs analytical mathematical algorithms to convert target points instantly into direct angular parameters for the joint hardware links.
 
-### Prerequisites
-- ROS 2 Humble Desktop installation
-- Python setuptools & colcon build tools
+### 3. Obstacle Avoidance Guard
+A proximity security routine that maps target vectors against virtual boundary spaces, serving as the system's defensive filter to halt movement prior to physical structural collisions.
 
-### Setup and Compilation
-1. **Clone the Repository** into your ROS 2 workspace src folder:
-   ```bash
-   cd ~/ros2_ws/src
-   git clone [https://github.com/your-username/decode-labs-robotics-project1.git](https://github.com/your-username/decode-labs-robotics-project1.git)
+### 4. Middleware Communication Loop
+The message broker infrastructure built using standard ROS 2 message matrices (`sensor_msgs` and `geometry_msgs`) to stream command fields smoothly to visualization frames.
 
-### Install Dependencies:
+## ⚙️ Features
+* **Planar & Spatial Trajectory Tracking:** Translates 3D workspace destination objectives into direct physical joint rotations ($\theta_1$ through $\theta_6$).
+* **Look-Ahead Safety Intervention:** Monitors spatial distance metrics against environmental hazards to deny unsafe movements.
+* **Middleware Package Architecture:** Fully integrated build framework designed for seamless ecosystem registration and execution.
 
-```bash
-cd ~/ros2_ws
-rosdep install --from-paths src --ignore-src -r -y
-Build the Package:
+## 🖥️ System Requirements
 
-```bash
-colcon build --packages-select my_robot_arm_package
-source install/setup.bash
-Launch the Controller Node:
+### Hardware / Environment Constraints
+* **Industrial 6-Axis Kinematic Model:** Configured with physical workspace limitations and rotational boundary caps.
+* **Dynamic Obstacle Array:** Simulated spatial zone representing physical perimeter structures.
 
-```bash
-ros2 run my_robot_arm_package ik_controller
-Repository Structure
-Plaintext
-my_robot_arm_package/
-├── package.xml                 # ROS 2 XML structural package dependencies
-├── setup.py                    # Build script and console entry point mapping
-├── urdf/
-│   └── industrial_arm.urdf     # Structural 3D robot model properties & joint parameters
-└── my_robot_arm_package/
-    ├── __init__.py
-    └── ik_trajectory_node.py   # Core analytical kinematics and math engine script
+### Software
+* **ROS 2 Humble Hawksbill:** The primary framework runtime environment.
+* **Python 3.10 or higher:** Core language platform for computational scripts.
+* **Colcon Build System:** For package compilation and local environment installation.
 
-### Architecture Overview
-The URDF Structure (urdf/): Contains the physical parameters of the industrial arm, including link cylinder/box properties, fixed anchor transforms, joint rotation axes limits, and specific tool center flange frames.
+## 📹 Deployment Output
+Watch the simulation pipeline execution log for the trajectory system:
 
-The Kinematics Node (my_robot_arm_package/): Listens for inputs on the /arm_target_pose topic, applies trigonometry and inverse trigonometric functions to find appropriate joint limits, and outputs the calculated joint vectors over /joint_states.
-
-Data Pipeline Parameters
-Targeted Input Topic
-Topic: /arm_target_pose
-
-Message Type: geometry_msgs/msg/Point
-
-Example Payload Structure:
-
-JSON
-{
-  "x": 0.45,
-  "y": 0.20,
-  "z": 0.55
-}
-Calculated Outgoing Matrix
-Topic: /joint_states
-
-Message Type: sensor_msgs/msg/JointState
-
-Output Array Map: Returns positions for ['joint_1', 'joint_2', 'joint_3', 'joint_4', 'joint_5', 'joint_6'] in radians.
-
-#### Developer Checklist
-[ ] The .urdf geometry configuration is verified free of syntax errors.
-
-[ ] Kinematics equation handling intercepts math domain exceptions to prevent node crashes.
-
-[ ] Target coordinates falling within the defined obstacle radius trigger safety warnings.
-
-[ ] The setup.py console script entry point matches node path locations perfectly.
+`[INFO] [ik_trajectory_node]: Industrial Kinematics Controller Activated.`  
+`[INFO] [ik_trajectory_node]: Trajectory calculated successfully. Moving to Target...`
